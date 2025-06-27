@@ -14,12 +14,21 @@ export default function Home() {
   const [items, setItems] = useState<{ name: string; quantity: number }[]>([]);
 
   const addToCart = (product: string) => {
-    const alreadyInCart = items.find((item) => item.name === product);
-    if (alreadyInCart) {
-      // @TODO need to find out how to update cart items
-    } else {
-      setItems([...items, { name: product, quantity: 1 }]);
+    let alreadyInCart = false;
+    const newItems = items.map((item) => {
+      if (item.name === product) {
+        alreadyInCart = true;
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }
+      return item;
+    });
+    if (!alreadyInCart) {
+      newItems.push({ name: product, quantity: 1 });
     }
+    setItems(newItems);
   };
 
   return (
