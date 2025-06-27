@@ -22,7 +22,9 @@ function AddItemButton({
   return (
     <button
       className={styles.card}
-      onClick={() => addToCartFn(name)}
+      onClick={() => {
+        addToCartFn(name);
+      }}
       aria-label="Add to basket"
     >
       <h2>
@@ -78,9 +80,7 @@ export default function Home() {
             <ItemCount
               key={item.name}
               name={item.name}
-              count={
-                items.find((item) => item.name === item.name)?.quantity || 0
-              }
+              count={items.find((i) => i.name === item.name)?.quantity || 0}
             />
           ))}
         </div>
