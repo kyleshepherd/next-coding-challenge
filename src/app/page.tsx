@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 function ItemCount({ count, name }: { count: number; name: string }) {
@@ -7,6 +7,29 @@ function ItemCount({ count, name }: { count: number; name: string }) {
     <div key={name}>
       {name} count: {count}
     </div>
+  );
+}
+
+function AddItemButton({
+  name,
+  description,
+  addToCartFn,
+}: {
+  name: string;
+  description: string;
+  addToCartFn: (name: string) => void;
+}) {
+  return (
+    <button
+      className={styles.card}
+      onClick={() => addToCartFn(name)}
+      aria-label="Add to basket"
+    >
+      <h2>
+        {name} <span>-&gt;</span>
+      </h2>
+      <p>{description}</p>
+    </button>
   );
 }
 
@@ -64,46 +87,14 @@ export default function Home() {
       </div>
 
       <div className={styles.grid}>
-        <button
-          className={styles.card}
-          onClick={() => addToCart("Item 1")}
-          aria-label="Add to basket"
-        >
-          <h2>
-            Item 1 <span>-&gt;</span>
-          </h2>
-          <p>Foo</p>
-        </button>
-        <button
-          className={styles.card}
-          onClick={() => addToCart("Item 2")}
-          aria-label="Add to basket"
-        >
-          <h2>
-            Item 2 <span>-&gt;</span>
-          </h2>
-          <p>Bar</p>
-        </button>
-        <button
-          className={styles.card}
-          onClick={() => addToCart("Item 3")}
-          aria-label="Add to basket"
-        >
-          <h2>
-            Item 3 <span>-&gt;</span>
-          </h2>
-          <p>Baz</p>
-        </button>
-        <button
-          className={styles.card}
-          onClick={() => addToCart("Item 4")}
-          aria-label="Add to basket"
-        >
-          <h2>
-            Item 4 <span>-&gt;</span>
-          </h2>
-          <p>Qux</p>
-        </button>
+        {itemInfo.map((item) => (
+          <AddItemButton
+            key={item.name}
+            name={item.name}
+            description={item.description}
+            addToCartFn={addToCart}
+          />
+        ))}
       </div>
     </main>
   );
