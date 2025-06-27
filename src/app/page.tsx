@@ -31,13 +31,17 @@ export default function Home() {
     setItems(newItems);
   };
 
+  useEffect(() => {
+    setItemCounts(items.reduce((acc, item) => acc + item.quantity, 0));
+  }, [items]);
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>Michael&apos;s Amazing Web Store</p>
         <div>
           <button className={styles.basket}>
-            Basket: {items.reduce((acc, item) => acc + item.quantity, 0)} items
+            Basket: {itemCounts} {itemCounts === 1 ? "item" : "items"}
           </button>
           <ItemCount
             name="Item 1"
